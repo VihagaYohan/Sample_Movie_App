@@ -39,6 +39,8 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.techtribeservices.movieapp.navigation.MovieNavigation
+import com.techtribeservices.movieapp.screens.home.MainContent
 import com.techtribeservices.movieapp.ui.theme.MovieAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -64,75 +66,7 @@ class MainActivity : ComponentActivity() {
 fun MyApp() {
     MovieAppTheme {
         // content()
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    modifier = Modifier
-                        .shadow(elevation = 5.dp),
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.primary,
-                    ),
-                    title = {
-                        Text(text = "Movies")
-                    }
-                )
-            }
-        ) { innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding)) {
-                MainContent()
-            }
-        }
-    }
-}
-
-@Composable
-fun MainContent(
-    modifier: Modifier = Modifier) {
-    var movieList : List<String> = listOf("Movie1", "Movie2", "Movie3", "Movie4", "Movie5", "Movie6")
-    Column(modifier = Modifier
-        .padding(12.dp)) {
-        LazyColumn {
-            items(items = movieList, itemContent = { movieItem ->
-                MovieRow(
-                    movie = movieItem) { it ->
-                    Log.d("TAG", "MainContent: $it")
-                }
-            })
-        }
-    }
-}
-
-@Composable
-fun MovieRow(movie: String, onItemClick: (String) -> Unit = {}) {
-    Card(
-        modifier = Modifier
-            .padding(4.dp)
-            .fillMaxWidth()
-            .height(130.dp)
-            .clickable {
-                onItemClick(movie)
-            },
-        shape = RoundedCornerShape(corner = CornerSize(16.dp)),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        )
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Surface(modifier = Modifier
-                .padding(12.dp)
-                .size(100.dp),
-                shape = RectangleShape,
-                shadowElevation = 4.dp) {
-                Icon(
-                    imageVector = Icons.Default.AccountBox,
-                    contentDescription = "movie image")
-            }
-            Text(text = movie)
-        }
+        MovieNavigation()
     }
 }
 
@@ -140,6 +74,7 @@ fun MovieRow(movie: String, onItemClick: (String) -> Unit = {}) {
 @Composable
 fun GreetingPreview() {
     MovieAppTheme {
-        MainContent()
+        //MainContent()
+        MovieNavigation()
     }
 }
