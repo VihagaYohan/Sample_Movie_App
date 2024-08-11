@@ -32,7 +32,10 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.techtribeservices.movieapp.models.Movie
+import com.techtribeservices.movieapp.models.getMovies
 import com.techtribeservices.movieapp.navigation.MovieScreens
+import com.techtribeservices.movieapp.widgets.MovieRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +65,7 @@ fun HomeScreen(navController: NavController) {
 fun MainContent(
     navController: NavController,
     modifier: Modifier = Modifier) {
-    var movieList : List<String> = listOf("Movie1", "Movie2", "Movie3", "Movie4", "Movie5", "Movie6")
+    var movieList : List<Movie> = getMovies()
     Column(modifier = Modifier
         .padding(12.dp)) {
         LazyColumn {
@@ -77,35 +80,3 @@ fun MainContent(
     }
 }
 
-@Composable
-fun MovieRow(movie: String, onItemClick: (String) -> Unit = {}) {
-    Card(
-        modifier = Modifier
-            .padding(4.dp)
-            .fillMaxWidth()
-            .height(130.dp)
-            .clickable {
-                onItemClick(movie)
-            },
-        shape = RoundedCornerShape(corner = CornerSize(16.dp)),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        )
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Surface(modifier = Modifier
-                .padding(12.dp)
-                .size(100.dp),
-                shape = RectangleShape,
-                shadowElevation = 4.dp) {
-                Icon(
-                    imageVector = Icons.Default.AccountBox,
-                    contentDescription = "movie image")
-            }
-            Text(text = movie)
-        }
-    }
-}
